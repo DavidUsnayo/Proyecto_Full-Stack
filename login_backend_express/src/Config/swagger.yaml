@@ -1,0 +1,228 @@
+openapi: 3.0.0
+info:
+  title: API de Autenticación
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: auth
+    description: Operaciones de autenticación (registro y login)
+  - name: notas
+    description: TODAS las notas
+  - name: info
+    description: Informacion del Cliente
+  - name: ajustes
+    description: ajustes que pueden cambiar el admin
+  - name: analisis
+    description: graaficos Estadisticas
+paths:
+  #### RUTAS AUTH
+
+  /auth/registro:
+    post:
+      tags:
+        - auth
+      summary: Registra un nuevo usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usuario:
+                  type: string
+                contrasena:
+                  type: string
+                rol:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: OK
+
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Inicia sesión de usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usuario:
+                  type: string
+                contrasena:
+                  type: string
+      responses:
+        '200':
+          description: OK
+
+
+  ### RUTAS NOTAS
+  /notas:
+    get:
+      tags:
+        - notas
+      summary: Obtiene todas las notas del usuario autenticado
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+
+  /notas/crearNota:
+    post:
+      tags:
+        - notas
+      summary: Crea una nueva nota
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+      responses:
+        '200':
+          description: OK
+
+  /notas/{id}:
+    delete:
+      tags:
+        - notas
+      summary: Elimina una nota por ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+
+
+  ### RUTAS INFO
+
+  /info:
+    get:
+      tags:
+        - info
+      summary: obtener informacion del usuario
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+
+
+  ### RUTAS AJUSTES
+
+  /ajustes:
+    get:
+      tags:
+        - ajustes
+      summary: Mostrar ajustes
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+
+  /ajustes/updateBorde:
+    put:
+      tags:
+        - ajustes
+      summary: Actualizar el borde en ajustes
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                borde:
+                  type: string
+                  example: "solid 2px #000"
+      responses:
+        '200':
+          description: OK
+
+  /ajustes/updateZoom:
+    put:
+      tags:
+        - ajustes
+      summary: Actualizar el ZOOM
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                zoomCard:
+                  type: string
+                  example: "0.9"
+      responses:
+        '200':
+          description: OK
+
+  /ajustes/updateColorTexto:
+    put:
+      tags:
+        - ajustes
+      summary: Actualizar color de texto
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                colorTexto:
+                  type: string
+                  example: "green"
+      responses:
+        '200':
+          description: OK
+
+
+### RUTAS ANALISIS
+
+  /analisis:
+    get:
+      tags:
+        - analisis
+      summary: Mostrar estadisticas
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+
+
+###  COMPONENTE SEGURIDAD [TOKEN]
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
