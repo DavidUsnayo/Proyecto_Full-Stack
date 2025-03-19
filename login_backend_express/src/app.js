@@ -7,7 +7,7 @@ import cors from 'cors'
 //RUTAS
 import Notas from './Routes/Notas.js'
 import Registro from './Routes/Auth.js'
-import Info from './Routes/info.js'
+import Info from './Routes/Info.js'
 import Ajustes from './Routes/Ajustes.js'
 import Analisis from './Routes/Analista.js'
 
