@@ -42,6 +42,8 @@ export function Notas(){
                 return res.json();
             }else{
                 navigate('/login')
+                localStorage.removeItem('token')
+                setToken(null)
                 throw new Error("Token inválido o expirado :(");
             }
         })
