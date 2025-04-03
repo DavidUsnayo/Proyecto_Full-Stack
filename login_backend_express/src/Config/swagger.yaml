@@ -6,7 +6,9 @@ servers:
   - url: http://localhost:3000
     description: Servidor local
   - url: https://proyectofull-stack-production.up.railway.app
-    description: Servidor de Desarrollo
+    description: Servidor : railway
+  - url: https://backend-api-1si3.onrender.com/
+    description: Servidor : render
 tags:
   - name: auth
     description: Operaciones de autenticación (registro y login)
